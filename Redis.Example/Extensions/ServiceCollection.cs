@@ -5,10 +5,6 @@ using StackExchange.Redis.Extensions.Core.Abstractions;
 using StackExchange.Redis.Extensions.Core.Configuration;
 using StackExchange.Redis.Extensions.Core.Implementations;
 using StackExchange.Redis.Extensions.Newtonsoft;
-using StackExchange.Redis.Extensions.Utf8Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Redis.PruebasDeConcepto.Extensions
 {
