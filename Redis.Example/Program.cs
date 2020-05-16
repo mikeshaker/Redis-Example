@@ -81,6 +81,26 @@ namespace Redis.Example
 
             Console.WriteLine($"Looking up single item a 100 times (v2): {sw.Elapsed.TotalMilliseconds}ms");
         }
+        private static async Task LookupSingleItem2(IDatabaseAsync db)
+        {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+
+            var random = new Random();
+
+            for (var i = 0; i < 100; i++)
+            {
+                var id = $"GT-{random.Next(0, Total)}";
+
+                var entries = await db.HashGetAllAsync($"clock:{id}");
+                var clock = ClockInfo.FromHashEntries(entries);
+
+                if (clock == null)
+                {
+                    Console.WriteLine("not found");
+                }
+            }
+            Console.WriteLine($"Looking up single item a 100 times (v1): {sw.Elapsed.TotalMilliseconds}ms");
+        }
 
         private static async Task LookupAllItems(IRedisDatabase db)
         {
@@ -137,26 +157,6 @@ namespace Redis.Example
 
         }
 
-        private static async Task LookupSingleItem2(IDatabaseAsync db)
-        {
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-
-            var random = new Random();
-
-            for (var i = 0; i < 100; i++)
-            {
-                var id = $"GT-{random.Next(0, Total)}";
-
-                var entries = await db.HashGetAllAsync($"clock:{id}");
-                var clock = ClockInfo.FromHashEntries(entries);
-
-                if (clock == null)
-                {
-                    Console.WriteLine("not found");
-                }
-            }
-            Console.WriteLine($"Looking up single item a 100 times (v1): {sw.Elapsed.TotalMilliseconds}ms");
-        }
 
         public class ClockInfo
         {
