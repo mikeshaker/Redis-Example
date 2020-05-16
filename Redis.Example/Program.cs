@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Redis.PruebasDeConcepto.Extensions;
 using StackExchange.Redis;
 using StackExchange.Redis.Extensions.Core.Abstractions;
@@ -12,7 +11,7 @@ namespace Redis.Example
 {
     class Program
     {
-        private static int Total = 50000;
+        private static int Total = 1000;
         static async Task Main(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
@@ -80,7 +79,7 @@ namespace Redis.Example
                 }
             }
 
-            Console.WriteLine($"Looking up one item 100 times (v2): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Looking up single item a 100 times (v2): {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         private static async Task LookupAllItems(IRedisDatabase db)
@@ -157,7 +156,7 @@ namespace Redis.Example
                     Console.WriteLine("not found");
                 }
             }
-            Console.WriteLine($"Looking up one item 100 times (v1): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Looking up single item a 100 times (v1): {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         public class ClockInfo
