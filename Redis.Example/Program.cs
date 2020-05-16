@@ -110,7 +110,7 @@ namespace Redis.Example
                     allClocks.Add(partition, clock);
                 }
                 await db.HashSetAsync<ClockInfo>("clocksPartition1", allClocks);
-            Console.WriteLine($"Storing 30k Using original HashSetAsync (v2): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Storing {Total} (v2): {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         private static async Task GenerateClocks(IDatabaseAsync db)
@@ -135,7 +135,7 @@ namespace Redis.Example
                 allClocks.Add(id, clock);
             }
 
-            Console.WriteLine($"Storing 30k Using original HashSetAsync (v1): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Storing {Total} Using original HashSetAsync (v1): {sw.Elapsed.TotalMilliseconds}ms");
 
         }
 
