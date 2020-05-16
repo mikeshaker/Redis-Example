@@ -11,7 +11,7 @@ namespace Redis.Example
 {
     class Program
     {
-        private static int Total = 1000;
+        private static int Total = 30000;
         static async Task Main(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
