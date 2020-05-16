@@ -109,14 +109,13 @@ namespace Redis.Example
                     allClocks.Add(partition, clock);
                 }
                 await db.HashSetAsync<ClockInfo>("clocksPartition1", allClocks);
+                await db.UpdateExpiryAsync("clocksPartition1", DateTimeOffset.Now.AddMinutes(5));
             Console.WriteLine($"Storing {Total} (v2): {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         private static async Task GenerateClocks(IDatabaseAsync db)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var allClocks = new Dictionary<string, ClockInfo>();
-
             var random = new Random();
 
             for (var i = 0; i < Total; i++)
@@ -131,7 +130,7 @@ namespace Redis.Example
 
                 };
                 await db.HashSetAsync($"clock:{id}", clock.ToHashEntries());
-                allClocks.Add(id, clock);
+                await db.KeyExpireAsync($"clock:{id}", DateTime.Now.AddMinutes(5));
             }
 
             Console.WriteLine($"Storing {Total} Using original HashSetAsync (v1): {sw.Elapsed.TotalMilliseconds}ms");
