@@ -25,9 +25,6 @@ namespace Redis.Example
             var serviceProvider = services.BuildServiceProvider();
 
             IRedisCacheClient _redisClient = serviceProvider.GetService<IRedisCacheClient>();
-            await _redisClient.Db1.FlushDbAsync();
-            await _redisClient.Db6.FlushDbAsync();
-
             //Normal
             var redis = await ConnectionMultiplexer.ConnectAsync("localhost:6379,abortConnect=false,defaultDatabase=6");
 
@@ -36,7 +33,9 @@ namespace Redis.Example
             Console.ResetColor();
             for (int i = 1; i <= 5; i++)
             {
-                 Console.ResetColor();
+                await _redisClient.Db1.FlushDbAsync();
+                await _redisClient.Db6.FlushDbAsync();
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Batch # {i}");
                 Console.ResetColor();
