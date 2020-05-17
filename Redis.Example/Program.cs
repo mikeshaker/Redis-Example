@@ -42,6 +42,7 @@ namespace Redis.Example
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 await NewMethod(_redisClient);
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 await OldMethod(db);
                 Console.ResetColor();
             }
@@ -108,6 +109,12 @@ namespace Redis.Example
 
             Console.WriteLine($"Get {allClocks.Count} Items back as List (v2): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
+
+        /// <summary>
+        /// Using Extensions 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
         private static async Task GenerateClocks(IRedisDatabase db)
             {
                 var sw = System.Diagnostics.Stopwatch.StartNew();
@@ -132,6 +139,11 @@ namespace Redis.Example
             Console.WriteLine($"Storing {Total} (v2): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
 
+        /// <summary>
+        /// Using HashSetAsync
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
         private static async Task GenerateClocks(IDatabaseAsync db)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
