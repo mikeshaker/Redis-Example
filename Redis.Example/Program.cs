@@ -79,7 +79,7 @@ namespace Redis.Example
                 }
             }
 
-            Console.WriteLine($"Looking up single item a 100 times (v2): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Looking up single item a 100 times (v2): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
         private static async Task LookupSingleItem2(IDatabaseAsync db)
         {
@@ -99,7 +99,7 @@ namespace Redis.Example
                     Console.WriteLine("not found");
                 }
             }
-            Console.WriteLine($"Looking up single item a 100 times (v1): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Looking up single item a 100 times (v1): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
 
         private static async Task LookupAllItems(IRedisDatabase db)
@@ -107,7 +107,7 @@ namespace Redis.Example
             var sw = System.Diagnostics.Stopwatch.StartNew();
             var allClocks = await db.HashGetAllAsync<ClockInfo>("clocksPartition1");
 
-            Console.WriteLine($"Get {allClocks.Count} Items back as List (v2): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Get {allClocks.Count} Items back as List (v2): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
         private static async Task GenerateClocks(IRedisDatabase db)
             {
@@ -130,7 +130,7 @@ namespace Redis.Example
                 }
                 await db.HashSetAsync<ClockInfo>("clocksPartition1", allClocks);
                 await db.UpdateExpiryAsync("clocksPartition1", DateTimeOffset.Now.AddMinutes(5));
-            Console.WriteLine($"Storing {Total} (v2): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Storing {Total} (v2): {Math.Round(sw.Elapsed.TotalMilliseconds)}ms");
         }
 
         private static async Task GenerateClocks(IDatabaseAsync db)
@@ -153,7 +153,7 @@ namespace Redis.Example
                 await db.KeyExpireAsync($"clock:{id}", DateTime.Now.AddMinutes(5));
             }
 
-            Console.WriteLine($"Storing {Total} Using original HashSetAsync (v1): {sw.Elapsed.TotalMilliseconds}ms");
+            Console.WriteLine($"Storing {Total} Using original HashSetAsync (v1): {Math.Round(sw.Elapsed.TotalMilliseconds, 3)}ms");
 
         }
 
