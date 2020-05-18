@@ -6,7 +6,7 @@ using StackExchange.Redis.Extensions.Core.Configuration;
 using StackExchange.Redis.Extensions.Core.Implementations;
 using StackExchange.Redis.Extensions.Newtonsoft;
 
-namespace Redis.PruebasDeConcepto.Extensions
+namespace Redis.Example.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -30,7 +30,7 @@ namespace Redis.PruebasDeConcepto.Extensions
 				{
 					Mode = ServerEnumerationStrategy.ModeOptions.All,
 					TargetRole = ServerEnumerationStrategy.TargetRoleOptions.Any,
-					UnreachableServerAction = ServerEnumerationStrategy.UnreachableServerActionOptions.Throw
+					UnreachableServerAction = ServerEnumerationStrategy.UnreachableServerActionOptions.IgnoreIfOtherAvailable
 				},
 				MaxValueLength = 1024,
 				PoolSize = 5
@@ -42,10 +42,7 @@ namespace Redis.PruebasDeConcepto.Extensions
 			services.AddSingleton<ISerializer, NewtonsoftSerializer>();
 
 
-			services.AddSingleton((provider) =>
-			{
-				return provider.GetRequiredService<IRedisCacheClient>().GetDbFromConfiguration();
-			});
+			services.AddSingleton((provider) => provider.GetRequiredService<IRedisCacheClient>().GetDbFromConfiguration());
 
 			services.AddSingleton(redisConfiguration);
 			return services;
